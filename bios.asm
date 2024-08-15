@@ -302,15 +302,17 @@ setup_keyboard:
 
     mov al, 0x60
     out 0x64, al
-    mov al, 0x70
+    mov al, 0x30
     out 0x60, al
     mov al, 0x60
     out 0x64, al
+    mov al, 0x20
     out 0x60, al
     mov al, 0xf4
     out 0x60, al
     mov al, 0x60
     out 0x64, al
+    mov al, 0x20
     out 0x60, al
     popa
     ret
