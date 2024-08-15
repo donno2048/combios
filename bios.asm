@@ -136,6 +136,13 @@ setup_screen:
     mov dx, 0x3da
     in al, dx
 
+    push 0xb800
+    pop es
+    mov ax, 0x720
+    mov cx, 0x4000
+    xor di, di
+    rep stosw
+
     push ds
     push 0x40
     pop ds
@@ -271,13 +278,11 @@ setup_keyboard:
     out 0x60, al
     mov al, 0x60
     out 0x64, al
-    mov al, 0x61
     out 0x60, al
     mov al, 0xf5
     out 0x60, al
     mov al, 0x60
     out 0x64, al
-    mov al, 0x61
     out 0x60, al
 
     mov al, 0x60
@@ -286,15 +291,13 @@ setup_keyboard:
     out 0x60, al
     mov al, 0x60
     out 0x64, al
-    mov al, 0x61
     out 0x60, al
     mov al, 0xf0
     out 0x60, al
-    mov al,  0x2
+    mov al,  0x1
     out 0x60, al
     mov al, 0x60
     out 0x64, al
-    mov al, 0x61
     out 0x60, al
 
     mov al, 0x60
@@ -303,13 +306,11 @@ setup_keyboard:
     out 0x60, al
     mov al, 0x60
     out 0x64, al
-    mov al, 0x61
     out 0x60, al
     mov al, 0xf4
     out 0x60, al
     mov al, 0x60
     out 0x64, al
-    mov al, 0x61
     out 0x60, al
     popa
     ret
@@ -319,7 +320,7 @@ clear:
     push 0xb800
     pop es
     mov ax, 0x720
-    mov cx, 0x4000
+    mov cx, 0x410
     xor di, di
     rep stosw
     pop es
