@@ -40,9 +40,10 @@ loop filler
 
 push 0
 pop ds
-mov WORD [0x40], reset
+mov WORD [0x40], clear
 mov WORD [0x42], cs
 call setup_keyboard
+call setup_screen
 xor bx, bx
 mov cx, 0xff
 mov si, 0x100
@@ -62,7 +63,7 @@ incbin file
 hlt
 
 
-reset:
+setup_screen:
     pushf
     pusha
     push ds
@@ -134,13 +135,6 @@ reset:
     out dx, al
     mov dx, 0x3da
     in al, dx
-
-    push 0xb800
-    pop es
-    mov ax, 0x720
-    mov cx, 0x4000
-    xor di, di
-    rep stosw
 
     push ds
     push 0x40
@@ -253,7 +247,7 @@ reset:
     pop ds
     popa
     popf
-    iret
+    ret
 setup_keyboard:
     pusha
     mov cx, 0x10
@@ -270,17 +264,20 @@ setup_keyboard:
     in al, 0x64
     in al, 0x60
     loop .flush2
+
     mov al, 0x60
     out 0x64, al
     mov al, 0x70
     out 0x60, al
     mov al, 0x60
     out 0x64, al
+    mov al, 0x61
     out 0x60, al
     mov al, 0xf5
     out 0x60, al
     mov al, 0x60
     out 0x64, al
+    mov al, 0x61
     out 0x60, al
 
     mov al, 0x60
@@ -289,13 +286,15 @@ setup_keyboard:
     out 0x60, al
     mov al, 0x60
     out 0x64, al
+    mov al, 0x61
     out 0x60, al
     mov al, 0xf0
     out 0x60, al
-    mov al, 0x2
+    mov al,  0x2
     out 0x60, al
     mov al, 0x60
     out 0x64, al
+    mov al, 0x61
     out 0x60, al
 
     mov al, 0x60
@@ -304,14 +303,28 @@ setup_keyboard:
     out 0x60, al
     mov al, 0x60
     out 0x64, al
+    mov al, 0x61
     out 0x60, al
     mov al, 0xf4
     out 0x60, al
     mov al, 0x60
     out 0x64, al
+    mov al, 0x61
     out 0x60, al
     popa
     ret
+clear:
+    pusha
+    push es
+    push 0xb800
+    pop es
+    mov ax, 0x720
+    mov cx, 0x4000
+    xor di, di
+    rep stosw
+    pop es
+    popa
+    iret
 
 arct: db 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x14, 0x07, \
          0x38, 0x39, 0x3a, 0x3b, 0x3c, 0x3d, 0x3e, 0x3f, \
