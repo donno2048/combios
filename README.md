@@ -2,7 +2,7 @@
 
 A minimal BIOS that allows embedding simple COM files in the BIOS itself.
 
-It could be even smaller but I tried making it so that it would work on as much hardware as I can, not only on qemu.
+Made specifically to make [biosnake](https://github.com/donno2048/biosnake), so if you need something less specific you have to modify it a little.
 
 ## Usage
 
@@ -12,4 +12,3 @@ To generate X.raw where X.com is the input COM file just run:
 nasm bios.asm -D COM=X.com -o X.raw
 ```
 
-[CP437.F16](./CP437.F16) was taken from https://github.com/viler-int10h/vga-text-mode-fonts
